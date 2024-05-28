@@ -7,7 +7,8 @@
     "start": "node dist/src/server.js",
     "dev": "concurrently \"npm run build:watch\" \"nodemon -r dotenv/config -q dist/server.js\"",
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "server": "npm run build && npm start"
   },
   "keywords": [],
   "author": "",
