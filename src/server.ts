@@ -1,8 +1,6 @@
 // src/server.ts
 
 import express, { Request, Response } from 'express';
-
-import dotenv from 'dotenv';
 import config from 'config';
 
 const app = express();
