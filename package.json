@@ -7,6 +7,7 @@
     "start": "node dist/server.js",
     "dev": "concurrently \"npm run build:watch\" \"nodemon -r dotenv/config -q dist/server.js\"",
     "build": "npm i && tsc",
+    "railway-deploy":"npm i && tsc && npm run start",
     "build:watch": "tsc --watch"
   },
   "keywords": [],
