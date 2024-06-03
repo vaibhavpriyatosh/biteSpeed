@@ -3,7 +3,8 @@
     "db": {
       "host": "localhost",
       "port": 27017,
-      "name": "myapp"
+      "name": "myapp",
+      "url":""
     },
     "apiKey": "default-api-key"
   }

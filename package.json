@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "concurrently \"npm run build:watch\" \"nodemon -r dotenv/config -q dist/server.js\"",
-    "build": "npm i && tsc",
-    "railway-deploy":"npm i && tsc && npm run start",
+    "build": "tsc",
+    "railway-deploy": "npm i && tsc && npm run start",
     "build:watch": "tsc --watch"
   },
   "keywords": [],
@@ -16,12 +16,15 @@
   "dependencies": {
     "config": "^3.3.11",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "knex": "^3.1.0",
+    "pg": "^8.11.5"
   },
   "devDependencies": {
     "@types/config": "^3.3.4",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "@types/knex": "^0.16.1",
     "@types/node": "^20.12.12",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.1",
