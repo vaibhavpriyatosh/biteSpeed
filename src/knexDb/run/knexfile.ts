@@ -2,7 +2,7 @@ import { knex, type Knex } from 'knex';
 import config from 'config';
 import dotenv from 'dotenv';
 dotenv.config();
-
+console.log("DB_Host", process.env.DB_HOST);
 const configuration: any = {
     client: 'pg',
     connection: {
