@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import config from 'config';
 
-const connectionS = config.get('db.url');
-
 const connection = knex(configuration);
 export const raw = async ({ query }: { query: string }) => {
     const data = await connection.raw(query);

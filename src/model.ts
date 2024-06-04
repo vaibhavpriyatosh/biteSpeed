@@ -126,6 +126,7 @@ const selectDistinctEmail = async ({ linkedId, email }: { linkedId: number, emai
         .distinct('email')
         .where('linkPrecedence', 'secondary')
         .andWhere('linkedId', linkedId)
+        .whereNotNull('email');
     if (email) {
         query.whereNot('email', email);
     }
@@ -136,6 +137,7 @@ const selectDistinctPhoneNumber = async ({ linkedId, phoneNumber }: { linkedId: 
         .distinct('phoneNumber')
         .where('linkPrecedence', 'secondary')
         .andWhere('linkedId', linkedId)
+        .whereNotNull('phoneNumber');
     if (phoneNumber) {
         query.whereNot('phoneNumber', phoneNumber);
     }

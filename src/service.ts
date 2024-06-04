@@ -19,22 +19,24 @@ const activityService = async ({ email, phoneNumber }: insertContact) => {
         if (!emailLinkedId && !phoneNumberId) {
             const result = await modelContact({ email, phoneNumber, linkPrecedence: 'primary' });
             if (result?.length === 0) {
-                throw new Error('N0t able to create primary entry');
+                throw new Error('Not able to create primary entry');
             }
             finalId = result[0]?.id
         } else if (!(emailLinkedId && phoneNumberId)) {
             const linkedId = emailLinkedId || phoneNumberId;
-            if (!linkedId) {
-                throw new Error('No link found!');
-            }
-            const result = await modelContactSecondary({
-                email,
-                phoneNumber,
-                linkPrecedence: 'secondary',
-                linkedId
-            });
-            if (result?.length === 0) {
-                throw new Error('N0t able to create primary entry');
+            if (email && phoneNumber) {
+                if (!linkedId) {
+                    throw new Error('No link found!');
+                }
+                const result = await modelContactSecondary({
+                    email,
+                    phoneNumber,
+                    linkPrecedence: 'secondary',
+                    linkedId
+                });
+                if (result?.length === 0) {
+                    throw new Error('Not able to create secondary entry');
+                }
             }
             finalId = linkedId;
         } else if (emailLinkedId != phoneNumberId) {
@@ -58,8 +60,18 @@ const activityService = async ({ email, phoneNumber }: insertContact) => {
         ]);
         const data = {
             primaryContatctId: finalId,
-            emails: [getByIdRes?.email ?? '', ...(emailIds?.filter(({ email }) => email)?.map(({ email }) => email) ?? [])],
-            phoneNumbers: [getByIdRes?.phoneNumber ?? 0, ...(phoneNumberIds?.filter(({ phoneNumber }) => phoneNumber)?.map(({ phoneNumber }) => phoneNumber) ?? [])],
+            emails: [
+                ...(getByIdRes?.email ?
+                    [getByIdRes?.email] :
+                    []),
+                ...(emailIds?.filter(({ email }) => email)?.map(({ email }) => email) ?? [])],
+            phoneNumbers:
+                [
+                    ...(getByIdRes?.phoneNumber ?
+                        [getByIdRes?.phoneNumber] :
+                        []),
+                    ...(phoneNumberIds?.filter(({ phoneNumber }) => phoneNumber)?.
+                        map(({ phoneNumber }) => phoneNumber) ?? [])],
             secondaryContactIds: ids?.filter(({ id }) => id)?.map(({ id }) => id),
         }
 
@@ -122,6 +134,9 @@ const getLinkedId: any = async ({ email, phoneNumber }: insertContact) => {
     try {
 
         let linkedId = null;
+        if (!email && !phoneNumber) {
+            return { ok: true, data: linkedId };
+        }
 
         const result: singleIdResponse = await getPrimaryId({ email, phoneNumber });
 

@@ -2,7 +2,6 @@ import { knex, type Knex } from 'knex';
 import config from 'config';
 import dotenv from 'dotenv';
 dotenv.config();
-console.log("DB_Host", process.env.DB_HOST);
 const configuration: any = {
     client: 'pg',
     connection: {
@@ -35,7 +34,6 @@ const connectAndQuery = async (): Promise<void> => {
     const db = knex(configuration);
     try {
         const result = await db.raw('SELECT 1+1 as result');
-        console.log('Database Connection Successful!!!');
     } catch (e) {
         console.error(`Error in Db connection : ${e}`);
     } finally {
